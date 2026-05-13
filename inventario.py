@@ -11,8 +11,6 @@ from datetime import datetime
 import xmlrpc.client
 import pandas as pd
 import pyodbc
-import json
-
 
 common = xmlrpc.client.ServerProxy(f"{url}/xmlrpc/2/common")
 uid = common.authenticate(db, username, password, {})
