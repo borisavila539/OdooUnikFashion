@@ -7,6 +7,7 @@ username = "rmartinez@intermoda.com.hn"
 password = "Intermod@2026/?"
 
 # Autenticación con Odoo
+from datetime import datetime
 import xmlrpc.client
 import pandas as pd
 import pyodbc
@@ -21,8 +22,19 @@ models = xmlrpc.client.ServerProxy(f"{url}/xmlrpc/2/object")
 # 1) Facturas del rango de fechas
 #    - Se piden solo los campos que realmente se usan (menos payload por XML-RPC)
 # ---------------------------------------------------------------------------
-fecha_inicio = '2026-07-10 06:00:00'
-fecha_fin = '2026-07-16 06:00:00'
+fecha_inicio = (datetime.today() - pd.Timedelta(days=1)).replace(
+    hour=6,
+    minute=0,
+    second=0,
+    microsecond=0
+)
+fecha_fin = datetime.today().replace(
+    hour=6,
+    minute=0,
+    second=0,
+    microsecond=0
+)
+print(f"Rango de fechas: {fecha_inicio} a {fecha_fin}")
 
 invoice = pd.DataFrame(
     models.execute_kw(
